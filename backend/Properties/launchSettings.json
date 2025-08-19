@@ -1,0 +1,22 @@
+{
+  "profiles": {
+	"backend-publisher": {
+	  "commandName": "Project",
+	  "launchBrowser": false,
+	  "environmentVariables": {
+		"ASPNETCORE_ENVIRONMENT": "Development",
+		"Redis__ConnectionString": "localhost:6379",
+		"SERVICE_TYPE": "publisher"
+	  }
+	},
+	"backend-consumer": {
+	  "commandName": "Project",
+	  "launchBrowser": false,
+	  "environmentVariables": {
+		"ASPNETCORE_ENVIRONMENT": "Development",
+		"Redis__ConnectionString": "localhost:6379",
+		"SERVICE_TYPE": "consumer"
+	  }
+	}
+  }
+}

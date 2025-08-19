@@ -1,0 +1,68 @@
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - my-app-network
+    container_name: redis-server
+
+  publisher-1:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    image: localhost/my-backend-app:latest
+    container_name: publisher-service-1
+    environment:
+      - SERVICE_TYPE=publisher
+      - SERVICE_NAME=publisher-one
+    depends_on:
+      - redis
+    networks:
+      - my-app-network
+
+  publisher-2:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    image: localhost/my-backend-app:latest
+    container_name: publisher-service-2
+    environment:
+      - SERVICE_TYPE=publisher
+      - SERVICE_NAME=publisher-two
+    depends_on:
+      - redis
+    networks:
+      - my-app-network
+
+  consumer-1:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    image: localhost/my-backend-app:latest
+    container_name: consumer-service-1
+    environment:
+      - SERVICE_TYPE=consumer
+      - SERVICE_NAME=consumer-one
+    depends_on:
+      - redis
+    networks:
+      - my-app-network
+
+  consumer-2:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    image: localhost/my-backend-app:latest
+    container_name: consumer-service-2
+    environment:
+      - SERVICE_TYPE=consumer
+      - SERVICE_NAME=consumer-two
+    depends_on:
+      - redis
+    networks:
+      - my-app-network
+
+networks:
+  my-app-network:
+    driver: bridge
